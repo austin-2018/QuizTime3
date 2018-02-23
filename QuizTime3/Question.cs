@@ -19,29 +19,41 @@ namespace QuizTime3
             ID = nextID++;
             Answers = new List<Answer>();
             Name = MakeQuestionName();
-            //MakePossibleAnswers();
+            MakePossibleAnswers(numberOfPossibleAnswers);
         }
 
         protected string MakeQuestionName()
         {
+            Console.Clear();
             Console.Write("Please enter the question: ");
             return Console.ReadLine();
         }
 
-        //protected void MakePossibleAnswers()
-        //{
-        //    Console.WriteLine("Enter {0} possible answers", NumberOfPossibleAnswers);
-        //    for (int i = 0; i < NumberOfPossibleAnswers; i++)
-        //    {
-        //        Console.Write("{0} ", i + 1);
-        //        Answers.Add(new Answer(i, Console.ReadLine()));
-        //    }
-        //}
+        protected void MakePossibleAnswers(int numberOfPossibleAnswers)
+        {
+            Console.Clear();
+            Console.WriteLine("Enter {0} possible answers", numberOfPossibleAnswers);
+            for (int i = 0; i < numberOfPossibleAnswers; i++)
+            {
+                Console.Write("{0}: ", i + 1);
+                Answers.Add(new Answer(i + 1, Console.ReadLine()));
+            }
+            SetCorrectAnswer();
+
+            // Testing for correct answer being chosen
+            //foreach (Answer answer in Answers)
+            //{
+            //    Console.WriteLine("Correct? => {0}", answer.IsCorrectAnswer);
+            //}
+        }
 
         protected void SetCorrectAnswer()
         {
+            Console.Clear();
             Utility.PrintQuestionOut("Choose which of the following answers are correct: ", Answers);
-            Answers.Find(correctAnswer => correctAnswer.ID.Equals(int.Parse(Utility.GetChoice(Answers)) - 1)).IsCorrectAnswer = true;
+            int answer = int.Parse(Utility.GetChoice(Answers));
+            Answer correctAnswer = (Answers.Find(individualAnswer => individualAnswer.ID.Equals(answer)));
+            correctAnswer.IsCorrectAnswer = true;
         }
     }
 }
