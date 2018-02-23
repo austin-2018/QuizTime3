@@ -10,9 +10,14 @@ namespace QuizTime3
         public int ID { get; set; }
         public string Name { get; set; }
         public int NumberOfPossibleAnswers { get; set; }
-        public int MyProperty { get; set; }
 
-        List<Answer> Answers { get; set; }
+        public List<Answer> Answers { get; set; }
+
+        public Question()
+        {
+            ID = nextID++;
+            Name = MakeQuestionName();
+        }
 
         public Question(int numberOfPossibleAnswers)
         {
@@ -39,21 +44,22 @@ namespace QuizTime3
                 Answers.Add(new Answer(i + 1, Console.ReadLine()));
             }
             SetCorrectAnswer();
-
-            // Testing for correct answer being chosen
-            //foreach (Answer answer in Answers)
-            //{
-            //    Console.WriteLine("Correct? => {0}", answer.IsCorrectAnswer);
-            //}
         }
 
-        protected void SetCorrectAnswer()
+        protected virtual void SetCorrectAnswer()
         {
             Console.Clear();
             Utility.PrintQuestionOut("Choose which of the following answers are correct: ", Answers);
             int answer = int.Parse(Utility.GetChoice(Answers));
             Answer correctAnswer = (Answers.Find(individualAnswer => individualAnswer.ID.Equals(answer)));
             correctAnswer.IsCorrectAnswer = true;
+            ////Testing for correct answer being chosen
+            //foreach (Answer singleAnswer in Answers)
+            //{
+            //    Console.WriteLine("Correct? => {0}", singleAnswer.IsCorrectAnswer);
+            //}
+            //Console.Write("To continue, press ENTER");
+            //Console.Read();
         }
     }
 }
