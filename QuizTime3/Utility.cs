@@ -7,32 +7,32 @@ namespace QuizTime3
 {
     class Utility
     {
-        public static bool isNumber(string input)
+        public static bool IsNumber(string input)
         {
             return input.All(Char.IsDigit);
         }
 
-        public static bool isWithinRange(string input, List<string> list)
+        public static bool IsWithinRange(string input, List<string> list)
         {
-            return int.Parse(input) < 0 || int.Parse(input) > list.Count ? false : true;
+            return int.Parse(input) < 1 || int.Parse(input) > list.Count ? false : true;
 
         }
 
-        public static bool isWithinRange(string input, List<Answer> answers)
+        public static bool  IsWithinRange(string input, List<Answer> answers)
         {
-            return int.Parse(input) < 0 || int.Parse(input) > answers.Count ? false : true;
+            return int.Parse(input) < 1 || int.Parse(input) > answers.Count ? false : true;
 
         }
 
-        public static bool isValidSelection(string input, List<string> list)
+        public static bool IsValidSelection(string input, List<string> list)
         {
-            return isNumber(input) ? isWithinRange(input, list) ? true : false : false;
+            return IsNumber(input) ? IsWithinRange(input, list) ? true : false : false;
 
         }
 
-        public static bool isValidSelection(string input, List<Answer> answers)
+        public static bool IsValidSelection(string input, List<Answer> answers)
         {
-            return isNumber(input) ? isWithinRange(input, answers) ? true : false : false;
+            return IsNumber(input) ? IsWithinRange(input, answers) ? true : false : false;
 
         }
 
@@ -63,7 +63,7 @@ namespace QuizTime3
             do
             {
                 input = Console.ReadLine();
-            } while (!isNumber(input));
+            } while (!IsNumber(input));
             return input;
         }
 
@@ -75,7 +75,7 @@ namespace QuizTime3
             {
                 Console.Write("Choice: ");
                 answer = Console.ReadLine();
-            } while (!isValidSelection(answer, questionType));
+            } while (!IsValidSelection(answer, questionType));
             return answer;
         }
 
@@ -87,7 +87,7 @@ namespace QuizTime3
             {
                 Console.Write("Choice: ");
                 answer = Console.ReadLine();
-            } while (!isValidSelection(answer, answers));
+            } while (!IsValidSelection(answer, answers));
             return answer;
         }
     }
