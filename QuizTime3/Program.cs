@@ -6,7 +6,15 @@ namespace QuizTime3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            SetUp();
+            Console.ReadLine();
+        }
+
+        static void SetUp()
+        {
+            Console.WriteLine("Enter a name for this quiz");
+            Quiz quiz = new Quiz(Console.ReadLine());
+            quiz.Play();
         }
     }
 }
