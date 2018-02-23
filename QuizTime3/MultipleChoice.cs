@@ -6,7 +6,7 @@ namespace QuizTime3
 {
     class MultipleChoice : Question
     {
-        public MultipleChoice(int numberOfPossibleAnswers = 4) : base(numberOfPossibleAnswers)
+        public MultipleChoice(int numberOfPossibleAnswers) : base(numberOfPossibleAnswers)
         {
         }
     }

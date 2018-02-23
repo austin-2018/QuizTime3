@@ -6,7 +6,7 @@ namespace QuizTime3
 {
     class CheckBox : Question
     {
-        public CheckBox(int numberOfPossibleAnswer = 5) : base(numberOfPossibleAnswer)
+        public CheckBox(int numberOfPossibleAnswer) : base(numberOfPossibleAnswer)
         {
 
         }
