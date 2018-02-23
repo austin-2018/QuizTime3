@@ -12,8 +12,7 @@ namespace QuizTime3
 
         static void SetUp()
         {
-            Console.WriteLine("Enter a name for this quiz");
-            Quiz quiz = new Quiz(Console.ReadLine());
+            Quiz quiz = new Quiz();
             quiz.Play();
         }
     }
