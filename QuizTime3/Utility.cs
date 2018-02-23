@@ -38,6 +38,7 @@ namespace QuizTime3
 
         public static void PrintQuestionOut(string prompt, List<string> questionTypes)
         {
+            Console.Clear();
             Console.WriteLine(prompt);
             string stringResult = "";
             int i = 0;
@@ -47,11 +48,13 @@ namespace QuizTime3
 
         public static void PrintQuestionOut(string prompt, List<Answer> answers)
         {
+            Console.Clear();
             Console.WriteLine(prompt);
             string stringResult = "";
             answers.ForEach(answer => {
-                stringResult += string.Format("{0}. {1}", answer.ID+1, answer.Name);
+                stringResult += string.Format("{0}. {1}\n", (answer.ID).ToString(), answer.Name);
             });
+            Console.WriteLine(stringResult);
         }
 
         public static string GetChoice()
