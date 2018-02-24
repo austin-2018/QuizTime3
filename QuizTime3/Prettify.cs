@@ -22,7 +22,7 @@ namespace QuizTime3
                     Console.Write("#");
                 }
 
-                Thread.Sleep(50);
+                WaitBefore();
                 Console.WriteLine();
             }
 
@@ -68,7 +68,7 @@ namespace QuizTime3
                 //{
                 //    Console.Write("#");
                 //}
-                Thread.Sleep(75);
+                WaitBefore();
                 Console.WriteLine();
             }
         }
@@ -95,14 +95,17 @@ namespace QuizTime3
 
         public static void TransitionEffect(string prompt)
         {
-            Thread.Sleep(500);
-            TransitionEffectHalfConsole();
-
             for (int m = 0; m < Console.WindowWidth / 4; m++)
             {
                 Console.Write(" ");
             }
             GameHelpers.PrintSlow(prompt);
+            Console.WriteLine();
+            for (int m = 0; m < Console.WindowWidth / 5; m++)
+            {
+                Console.Write(" ");
+            }
+            GameHelpers.PrintSlow("If you did not want to begin, sorry, you're stuck unless you close the console :)");
             Console.ReadLine();
             Thread.Sleep(250);
 
@@ -113,7 +116,7 @@ namespace QuizTime3
         {
             for (int i = 0; i < Console.WindowHeight; i++)
             {
-                Thread.Sleep(50);
+                WaitBefore();
                 Console.WriteLine();
             }
         }
@@ -122,7 +125,7 @@ namespace QuizTime3
         {
             for (int i = 0; i < Console.WindowHeight / 2; i++)
             {
-                Thread.Sleep(50);
+                WaitBefore();
                 Console.WriteLine();
             }
         }
@@ -157,7 +160,7 @@ namespace QuizTime3
                         Console.Write(" ");
                     }     
                 }
-                Thread.Sleep(75);
+                WaitBefore();
             }
         }
 
@@ -169,6 +172,7 @@ namespace QuizTime3
 
         public static void DisplaySet1()
         {
+            TransitionEffectHalfConsole();
             DisplayWelcome();
             Thread.Sleep(500);
             TransitionEffectHalfConsole();
@@ -186,7 +190,8 @@ namespace QuizTime3
             TransitionEffectHalfConsole();
             DisplayPillar();
             CreateArrowhead();
-            TransitionEffect("Are you ready to begin the game?");
+            TransitionEffectHalfConsole();
+            TransitionEffect("Are you ready to begin the game? Press ENTER to continue");
             DisplayPillar();
             CreateArrowhead();
             Console.Clear();
@@ -199,6 +204,11 @@ namespace QuizTime3
             GameHelpers.PrintSlow(". . . . . . . . ", 150);
             GameHelpers.PrintSlow("Good bye!");
             Thread.Sleep(1000);
+        }
+
+        private static void WaitBefore()
+        {
+            Thread.Sleep(25);
         }
     }
 }
