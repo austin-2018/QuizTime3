@@ -47,8 +47,8 @@ namespace QuizTime3
 
         protected virtual void SetCorrectAnswer()
         {
-            Utility.PrintQuestionOut("Choose which of the following answers are correct: ", Answers);
-            int answer = int.Parse(Utility.GetAnswerKey(Answers));
+            Utility.PrintQuestionOut(string.Format("Question: {0}\n\nChoose which of the following answers are correct: ", Name), Answers);
+            int answer = int.Parse(Utility.GetAnswer("Answer Key: ", Answers));
             Answer correctAnswer = (Answers.Find(individualAnswer => individualAnswer.ID.Equals(answer)));
             correctAnswer.IsCorrectAnswer = true;
             ////Testing for correct answer being chosen
