@@ -58,27 +58,28 @@ namespace QuizTime3
                 //var query = choices.SelectMany(
                 //    choice => question.Answers.Where(
                 //        answer => answer.ID.Equals(int.Parse(choice.ToString()))));
-            }   
+            }
         }
 
-        public List<char> ChooseAnswer(Question question)
-        {
-            List<char> choices;
-            Console.Write("Enter your choice or choice(s) [if more than one just group it i.e. 123]: ");
-            do
-            {
-                string input = Console.ReadLine();
-                choices = input.ToList();
-            } while (choices.Contains(',') || choices.Contains(' ') || !(choices.TrueForAll(key => char.IsDigit(key) ? !(int.Parse(key.ToString()) < 1 || int.Parse(key.ToString()) > question.Answers.Count) : false )));
+        // do not use, must refactor for use with CheckBoxes
+        //public List<char> ChooseAnswer(Question question)
+        //{
+        //    List<char> choices;
+        //    Console.Write("Enter your choice or choice(s) [if more than one just group it i.e. 123]: ");
+        //    do
+        //    {
+        //        string input = Console.ReadLine();
+        //        choices = input.ToList();
+        //    } while (choices.Contains(',') || choices.Contains(' ') || !(choices.TrueForAll(key => char.IsDigit(key) ? !(int.Parse(key.ToString()) < 1 || int.Parse(key.ToString()) > question.Answers.Count) : false )));
 
-            return choices;
-        }
+        //    return choices;
+        //}
 
         public string GradeQuiz()
         {
             Console.Clear();
             IList<Answer> correct = UserChoices.FindAll(answer => answer.IsCorrectAnswer);
-            double result = (double) correct.Count / (double) UserChoices.Count;
+            double result = (double)correct.Count / (double)UserChoices.Count;
             return string.Format("{0} out of {1} correct: {2:P}", correct.Count, UserChoices.Count, result);
         }
 
@@ -89,17 +90,16 @@ namespace QuizTime3
             return int.Parse(Utility.GetChoice());
         }
 
-
-
-        public static Question DetermineQuestionType()
+        public Question DetermineQuestionType()
         {
-           return MakeQuestionType(Utility.GetAnswerKey(QuestionTypesStringVersion));
+            return MakeQuestionType(Utility.GetAnswerKey(QuestionTypesStringVersion));
         }
 
         public static Question MakeQuestionType(string key)
         {
-         //   return key.Equals("1") ? new MultipleChoice(4) as Question : key.Equals("2") ? new TrueFalse() as Question;: new CheckBox(5) as Question;
+            //   return key.Equals("1") ? new MultipleChoice(4) as Question : key.Equals("2") ? new TrueFalse() as Question;: new CheckBox(5) as Question;
             return key.Equals("1") ? new MultipleChoice(4) as Question : new TrueFalse() as Question; //: new CheckBox(5) as Question;
         }
     }
 }
+
