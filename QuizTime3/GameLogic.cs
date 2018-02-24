@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace QuizTime3
 {
-    class Utility
+    class GameLogic
     {
         public static bool IsNumber(string input)
         {
@@ -81,12 +81,24 @@ namespace QuizTime3
             PrintSlow(stringResult);
         }
 
-        public static string GetAnswer()
+        public static string GetQuestionAmount()
         {
             string input;
             do
             {
+                PrintSlow("How many questions are there going to be: ");
                 input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input) || !IsNumber(input))
+                {
+                    PrintSlow(string.Format(
+                        "Expected: integer\n" +
+                        "Received: {0} " +
+                        "\nRe-prompting", input));
+
+                    PrintSlow(" . . . . .", 75);
+                    Console.Clear();
+                }
+
             } while (string.IsNullOrWhiteSpace(input) || !IsNumber(input));
             return input;
         }
@@ -103,10 +115,7 @@ namespace QuizTime3
                 if (string.IsNullOrWhiteSpace(answer))
                 {
                     PrintSlow("You did not enter what was expected: \nRe-prompting");
-                    for (int i = 0; i < 5; i++)
-                    {
-                        PrintSlow(" .", 200);
-                    }
+                    PrintSlow(" . . . . .", 75);
                     Console.Clear();
                 } else
                 {
@@ -129,10 +138,7 @@ namespace QuizTime3
                 if (string.IsNullOrWhiteSpace(answer))
                 {
                     PrintSlow("You did not enter what was expected: \nRe-prompting");
-                    for (int i = 0; i < 5; i++)
-                    {
-                        PrintSlow(" .", 200);
-                    }
+                    PrintSlow(" . . . . .", 75);
                     Console.Clear();
                 }
                 else
@@ -155,10 +161,7 @@ namespace QuizTime3
                 if (string.IsNullOrWhiteSpace(answer))
                 {
                     PrintSlow("You did not enter what was expected: \nRe-prompting");
-                    for (int i = 0; i < 5; i++)
-                    {
-                        PrintSlow(" .", 200);
-                    }
+                    PrintSlow(" . . . . .", 75);
                     Console.Clear();
                 }
 
@@ -172,17 +175,14 @@ namespace QuizTime3
 
             do
             {
-                Utility.PrintQuestionOut(prompt, answers);
+                GameLogic.PrintQuestionOut(prompt, answers);
                 Console.Write("\nAnswer Key: ");
                 answer = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(answer))
                 {
                     PrintSlow("You did not enter what was expected: \nRe-prompting");
-                    for (int i = 0; i < 5; i++)
-                    {
-                        PrintSlow(" .", 200);
-                    }
+                    PrintSlow(" . . . . .", 75);
                     Console.Clear();
                 }
 
@@ -196,16 +196,13 @@ namespace QuizTime3
 
             do
             {
-                Utility.PrintQuestionOut(prompt, game.Options);
+                GameLogic.PrintQuestionOut(prompt, game.Options);
                 Console.Write("\nChoice: ");
                 answer = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(answer))
                 {
                     PrintSlow("You did not enter what was expected: \nRe-prompting");
-                    for (int i = 0; i < 5; i++)
-                    {
-                        PrintSlow(" .", 200);
-                    }
+                    PrintSlow(" . . . . .", 75);
                     Console.Clear();
                 }
 
