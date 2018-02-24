@@ -194,6 +194,7 @@ namespace QuizTime3
             TransitionEffect("Are you ready to begin the game? Press ENTER to continue");
             DisplayPillar();
             CreateArrowhead();
+            TransitionEffectFullConsole();
             Console.Clear();
         }
 
