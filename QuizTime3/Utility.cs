@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace QuizTime3
 {
@@ -14,81 +15,220 @@ namespace QuizTime3
 
         public static bool IsWithinRange(string input, List<string> list)
         {
-            return int.Parse(input) < 1 || int.Parse(input) > list.Count ? false : true;
+            return int.Parse(input) > 0 && int.Parse(input) < list.Count + 1;
 
         }
 
-        public static bool  IsWithinRange(string input, List<Answer> answers)
+        public static bool IsWithinRange(string input, List<Answer> answers)
         {
-            return int.Parse(input) < 1 || int.Parse(input) > answers.Count ? false : true;
+            return int.Parse(input) > 0 && int.Parse(input) < answers.Count + 1;
+
+        }
+
+        public static bool IsWithinRange(string input, List<Option> options)
+        {
+            return int.Parse(input) > 0 && int.Parse(input) < options.Count + 1;
 
         }
 
         public static bool IsValidSelection(string input, List<string> list)
         {
-            return IsNumber(input) ? IsWithinRange(input, list) ? true : false : false;
+            return IsNumber(input) && IsWithinRange(input, list);
 
         }
 
         public static bool IsValidSelection(string input, List<Answer> answers)
         {
-            return IsNumber(input) ? IsWithinRange(input, answers) ? true : false : false;
+            return IsNumber(input) && IsWithinRange(input, answers);
+
+        }
+
+        public static bool IsValidSelection(string input, List<Option> options)
+        {
+            return IsNumber(input) && IsWithinRange(input, options);
 
         }
 
         public static void PrintQuestionOut(string prompt, List<string> questionTypes)
         {
             Console.Clear();
-            Console.WriteLine(prompt);
+            PrintSlow(prompt + "\n\n");
             string stringResult = "";
             int i = 0;
             questionTypes.ForEach(items => stringResult += string.Format("{0}. {1}\n", (++i).ToString(), items));
-            Console.WriteLine(stringResult);
+            PrintSlow(stringResult, 5);
         }
 
         public static void PrintQuestionOut(string prompt, List<Answer> answers)
         {
             Console.Clear();
-            Console.WriteLine(prompt);
+            PrintSlow(prompt + "\n\n");
             string stringResult = "";
             answers.ForEach(answer => {
                 stringResult += string.Format("{0}. {1}\n", (answer.ID).ToString(), answer.Name);
             });
-            Console.WriteLine(stringResult);
+            PrintSlow(stringResult);
         }
 
-        public static string GetChoice()
+        public static void PrintQuestionOut(string prompt, List<Option> options)
+        {
+            Console.Clear();
+            PrintSlow(prompt + "\n\n");
+            string stringResult = "";
+            options.ForEach(answer => {
+                stringResult += string.Format("{0}. {1}\n", (answer.ID).ToString(), answer.Name);
+            });
+            PrintSlow(stringResult);
+        }
+
+        public static string GetAnswer()
         {
             string input;
             do
             {
                 input = Console.ReadLine();
-            } while (!IsNumber(input));
+            } while (string.IsNullOrWhiteSpace(input) || !IsNumber(input));
             return input;
         }
 
-        public static string GetAnswerKey(List<string> questionType)
+        public static string GetAnswer(string prompt)
         {
             string answer;
+            bool isValid = false;
 
             do
             {
-                Console.Write("Answer Key: ");
+                PrintSlow(prompt);
                 answer = Console.ReadLine();
-            } while (!IsValidSelection(answer, questionType));
+                if (string.IsNullOrWhiteSpace(answer))
+                {
+                    PrintSlow("You did not enter what was expected: \nRe-prompting");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        PrintSlow(" .", 200);
+                    }
+                    Console.Clear();
+                } else
+                {
+                    isValid = true;
+                }
+            } while (!isValid);
             return answer;
         }
 
-        public static string GetAnswerKey(List<Answer> answers)
+        public static string GetAnswer(string prompt, Question question)
+        {
+            string answer;
+            bool isValid = false;
+
+            do
+            {
+                PrintQuestionOut(prompt + question.Name, question.Answers);
+                PrintSlow("\nChoice: ");
+                answer = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(answer))
+                {
+                    PrintSlow("You did not enter what was expected: \nRe-prompting");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        PrintSlow(" .", 200);
+                    }
+                    Console.Clear();
+                }
+                else
+                {
+                    isValid = true;
+                }
+            } while (!isValid);
+            return answer;
+        }
+
+        public static string GetAnswer(string prompt, List<string> questionType)
         {
             string answer;
 
             do
             {
-                Console.Write("Answer Key: ");
+                PrintQuestionOut(prompt, questionType);
+                Console.Write("\nChoice: ");
                 answer = Console.ReadLine();
-            } while (!IsValidSelection(answer, answers));
+                if (string.IsNullOrWhiteSpace(answer))
+                {
+                    PrintSlow("You did not enter what was expected: \nRe-prompting");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        PrintSlow(" .", 200);
+                    }
+                    Console.Clear();
+                }
+
+            } while (string.IsNullOrWhiteSpace(answer) || !IsValidSelection(answer, questionType));
             return answer;
+        }
+
+        public static string GetAnswer(string prompt, List<Answer> answers)
+        {
+            string answer;
+
+            do
+            {
+                Utility.PrintQuestionOut(prompt, answers);
+                Console.Write("\nAnswer Key: ");
+                answer = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(answer))
+                {
+                    PrintSlow("You did not enter what was expected: \nRe-prompting");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        PrintSlow(" .", 200);
+                    }
+                    Console.Clear();
+                }
+
+            } while (string.IsNullOrWhiteSpace(answer) || !IsValidSelection(answer, answers));
+            return answer;
+        }
+
+        public static string GetAnswer(string prompt, Game game)
+        {
+            string answer;
+
+            do
+            {
+                Utility.PrintQuestionOut(prompt, game.Options);
+                Console.Write("\nChoice: ");
+                answer = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(answer))
+                {
+                    PrintSlow("You did not enter what was expected: \nRe-prompting");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        PrintSlow(" .", 200);
+                    }
+                    Console.Clear();
+                }
+
+            } while (string.IsNullOrWhiteSpace(answer) || !IsValidSelection(answer, game.Options));
+            return answer;
+        }
+
+        public static void PrintSlow(string prompt)
+        {
+            foreach (char character in prompt)
+            {
+                Console.Write(character);
+                Thread.Sleep(3);
+            }
+        }
+
+        public static void PrintSlow(string prompt, int speedInMillisecond)
+        {
+            foreach (char character in prompt)
+            {
+                Console.Write(character);
+                Thread.Sleep(speedInMillisecond);
+            }
         }
     }
 }
