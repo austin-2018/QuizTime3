@@ -7,59 +7,71 @@ namespace QuizTime3
 {
     class CheckBox : Question
     {
-        public static List<char> MultipleAnswers { get; set; }
 
-        public CheckBox(int numberOfPossibleAnswer) : base(numberOfPossibleAnswer)
-        {
-            MultipleAnswers = new List<char>();
+        public CheckBox(int numberOfPossibleAnswer) {
+            Console.WriteLine("Check box class is under construction");
         }
+        //public List<char> MultipleAnswers { get; set; }
+        //public CheckBox(int numberOfPossibleAnswer) : base()
+        //{
+        //    Answers = new List<Answer>();
+        //    MultipleAnswers = new List<char>();
+        //    MakePossibleAnswers(numberOfPossibleAnswer);
 
-        protected override void SetCorrectAnswer()
-        {
-            Console.Clear();
-            Utility.PrintQuestionOut("Choose which of the following answers are correct: ", Answers);
-            GetChoices();
-            foreach (char character in MultipleAnswers)
-            {
-                Answer correctanswer = (Answers.Single(individualAnswer => individualAnswer.ID.Equals(int.Parse(character.ToString()))));
-                correctanswer.IsCorrectAnswer = true;
-            }
-        }
+        //}
 
-        private void GetChoices()
-        {
-            string input;
-            do
-            {
-                Console.Write("Choice [separate by spaces]: ");
-                input = Console.ReadLine();
-            } while (!IsValidSelection(input, Answers));
+        //protected override void MakePossibleAnswers(int numberOfPossibleAnswers)
+        //{
+        //    base.MakePossibleAnswers(numberOfPossibleAnswers);
+        //    SetCorrectAnswer();
+        //}
 
-            foreach (char character in input)
-            {
-                if(!(character.Equals(' ')))
-                {
-                    MultipleAnswers.Add(character);
-                }
-            }
-        }
+        //protected override void SetCorrectAnswer()
+        //{
+        //    Console.Clear();
+        //    Utility.PrintQuestionOut("Choose which of the following answers are correct: ", Answers);
+        //    GetAnswerKey();
+        //    foreach (char character in MultipleAnswers)
+        //    {
+        //        Answer correctanswer = (Answers.Single(individualAnswer => individualAnswer.ID.Equals(int.Parse(character.ToString()))));
+        //        correctanswer.IsCorrectAnswer = true;
+        //    }
+        //}
 
-        private bool IsValidSelection(string input, List<Answer> answers)
-        {
-            bool result = true;
-            string[] inputSplit = input.Split(' ');
-            if (result)
-            {
-                if (!(inputSplit.Length > answers.Count))
-                {
-                    for (int i = 0; i < inputSplit.Length; i++)
-                    {
-                        result = true && (int.Parse(inputSplit[i]) > 0 || int.Parse(inputSplit[i]) < answers.Count) ? true : false;
-                    }
-                }
-            }
+        //private void GetAnswerKey()
+        //{
+        //    string input;
+        //    do
+        //    {
+        //        Console.Write("Answer Key [separate by spaces]: ");
+        //        input = Console.ReadLine();
+        //    } while (!IsValidSelection(input, Answers));
 
-            return result;
-        }
+        //    foreach (char character in input)
+        //    {
+        //        if(!(character.Equals(' ')))
+        //        {
+        //            MultipleAnswers.Add(character);
+        //        }
+        //    }
+        //}
+
+        //private bool IsValidSelection(string input, List<Answer> answers)
+        //{
+        //    bool result = true;
+        //    string[] inputSplit = input.Split(' ');
+        //    if (result)
+        //    {
+        //        if (!(inputSplit.Length > answers.Count))
+        //        {
+        //            for (int i = 0; i < inputSplit.Length; i++)
+        //            {
+        //                result = true && (int.Parse(inputSplit[i]) > 0 || int.Parse(inputSplit[i]) < answers.Count) ? true : false;
+        //            }
+        //        }
+        //    }
+
+        //    return result;
+        //}
     }
 }
