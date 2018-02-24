@@ -22,7 +22,7 @@ namespace QuizTime3
 
         internal Quiz()
         {
-            Name = Utility.GetAnswer("Enter name for this Quiz: ");
+            Name = GameLogic.GetAnswer("Enter name for this Quiz: ");
             Questions = new List<Question>();
             UserChoices = new List<Answer>();
             Correct = 0.00;
@@ -32,12 +32,10 @@ namespace QuizTime3
         {
             SetUpQuestions();
             StartQuiz();
-            Utility.PrintSlow(GradeQuiz());
-            Utility.PrintSlow("\n\nGame is about to end");
-            for (int i = 0; i < 5; i++)
-            {
-                Utility.PrintSlow(" .", 200);
-            }
+            GameLogic.PrintSlow(GradeQuiz());
+            GameLogic.PrintSlow("\n\nGame is about to end");
+            GameLogic.PrintSlow(" . . . . . . . .", 100);
+            
         }
 
         private void SetUpQuestions()
@@ -55,7 +53,7 @@ namespace QuizTime3
         {
             foreach (Question question in Questions)
             {
-                string choice = Utility.GetAnswer("Question: ", question);
+                string choice = GameLogic.GetAnswer("Question: ", question);
                 UserChoices.Add(question.Answers.Find(answer => answer.ID.Equals(int.Parse(choice))));
                 //UNDER CONSTRUCTION 
                 //IList<char> choices = ChooseAnswer(question;
@@ -85,14 +83,14 @@ namespace QuizTime3
             IList<Answer> correct = UserChoices.FindAll(answer => answer.IsCorrectAnswer);
             Correct = QuizGrader((double)correct.Count, (double)UserChoices.Count);
 
-            Utility.PrintSlow("Grading quiz");
+            GameLogic.PrintSlow("Grading quiz");
 
             for (int i = 0; i < 5; i++)
             {
                 Thread.Sleep(250);
                 Console.Write(" .");
             }
-            Utility.PrintSlow(" Done!\nNow for the moment of truth, see results below\n");
+            GameLogic.PrintSlow(" Done!\nNow for the moment of truth, see results below\n");
 
             string result = string.Format("Result: {0} out of {1} correct: {2:P}", correct.Count, UserChoices.Count, Correct);
 
@@ -107,13 +105,12 @@ namespace QuizTime3
         private int DetermineQuestionAmount()
         {
             Console.Clear();
-            Utility.PrintSlow("How many questions are there going to be: ");
-            return int.Parse(Utility.GetAnswer());
+            return int.Parse(GameLogic.GetQuestionAmount());
         }
 
         private Question DetermineQuestionType()
         {
-            return MakeQuestionType(Utility.GetAnswer("What kind of question do you want this question to be:", QuestionTypesStringVersion));
+            return MakeQuestionType(GameLogic.GetAnswer("What kind of question do you want this question to be:", QuestionTypesStringVersion));
         }
             public static Question MakeQuestionType(string key)
         {

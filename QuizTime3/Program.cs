@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace QuizTime3
 {
@@ -13,15 +14,16 @@ namespace QuizTime3
                 quiz = new Quiz();
                 quiz.Play();
                 PlayAgain(game);
-
             }
-            Console.ReadLine();
+            GameLogic.PrintSlow(". . . . . . . . ", 150);
+            GameLogic.PrintSlow("Good bye!");
+            Thread.Sleep(1000);
         }
 
 
         private static void PlayAgain(Game game)
         {
-            string choice = Utility.GetAnswer("Do you want to play again ?", game);
+            string choice = GameLogic.GetAnswer("Do you want to play again ?", game);
             Option pickedOption = game.Options.Find(option => option.ID.Equals(int.Parse(choice)));
             game.IsRunning = pickedOption.Name.Equals("Yes");
             Console.Clear();
