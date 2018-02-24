@@ -8,6 +8,7 @@ namespace QuizTime3
     {
         public MultipleChoice(int numberOfPossibleAnswers) : base(numberOfPossibleAnswers)
         {
+            SetCorrectAnswer();
         }
     }
 }
