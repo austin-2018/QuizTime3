@@ -7,6 +7,7 @@ namespace QuizTime3
     {
         static void Main(string[] args)
         {
+            Prettify.DisplayOpening();
             Game game = new Game();
             Quiz quiz;
             while (game.IsRunning)
@@ -15,9 +16,7 @@ namespace QuizTime3
                 quiz.Play();
                 PlayAgain(game);
             }
-            GameLogic.PrintSlow(". . . . . . . . ", 150);
-            GameLogic.PrintSlow("Good bye!");
-            Thread.Sleep(1000);
+            Prettify.DisplayEnding();
         }
 
 

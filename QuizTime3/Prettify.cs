@@ -102,7 +102,7 @@ namespace QuizTime3
             {
                 Console.Write(" ");
             }
-            Console.Write(prompt);
+            GameLogic.PrintSlow(prompt);
             Console.ReadLine();
             Thread.Sleep(250);
 
@@ -190,6 +190,15 @@ namespace QuizTime3
             DisplayPillar();
             CreateArrowhead();
             Console.Clear();
+        }
+
+        public static void DisplayEnding()
+        {
+            DisplayAlternatingSymbols('*');
+            TransitionEffectHalfConsole();
+            GameLogic.PrintSlow(". . . . . . . . ", 150);
+            GameLogic.PrintSlow("Good bye!");
+            Thread.Sleep(1000);
         }
     }
 }
