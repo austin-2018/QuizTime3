@@ -8,7 +8,7 @@ namespace QuizTime3
     class CheckBox : Question
     {
 
-        public CheckBox(int numberOfPossibleAnswer) {
+        internal CheckBox(int numberOfPossibleAnswer) {
             Console.WriteLine("Check box class is under construction");
         }
         //public List<char> MultipleAnswers { get; set; }

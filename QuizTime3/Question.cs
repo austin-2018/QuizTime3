@@ -7,19 +7,19 @@ namespace QuizTime3
     abstract class Question
     {
         private static int nextID = 0;
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int NumberOfPossibleAnswers { get; set; }
+        private int ID { get; set; }
+        internal string Name { get; set; }
+        private int NumberOfPossibleAnswers { get; set; }
 
         public List<Answer> Answers { get; set; }
 
-        public Question()
+        internal Question()
         {
             ID = nextID++;
             Name = MakeQuestionName();
         }
 
-        public Question(int numberOfPossibleAnswers)
+        internal Question(int numberOfPossibleAnswers)
         {
             ID = nextID++;
             Answers = new List<Answer>();
@@ -30,14 +30,13 @@ namespace QuizTime3
         protected string MakeQuestionName()
         {
             Console.Clear();
-            Console.Write("Please enter the question: ");
-            return Console.ReadLine();
+            return Utility.GetAnswer("Please enter the question: ");
         }
 
         protected virtual void MakePossibleAnswers(int numberOfPossibleAnswers)
         {
             Console.Clear();
-            Console.WriteLine("Enter {0} possible answers", numberOfPossibleAnswers);
+            Utility.PrintSlow(string.Format("Enter {0} possible answers\n", numberOfPossibleAnswers));
             for (int i = 0; i < numberOfPossibleAnswers; i++)
             {
                 Console.Write("{0}: ", i + 1);
@@ -47,8 +46,8 @@ namespace QuizTime3
 
         protected virtual void SetCorrectAnswer()
         {
-            Utility.PrintQuestionOut(string.Format("Question: {0}\n\nChoose which of the following answers are correct: ", Name), Answers);
-            int answer = int.Parse(Utility.GetAnswer("Answer Key: ", Answers));
+            
+            int answer = int.Parse(Utility.GetAnswer(string.Format("Question: {0}\n\nChoose which of the following answers are correct: ", Name), Answers));
             Answer correctAnswer = (Answers.Find(individualAnswer => individualAnswer.ID.Equals(answer)));
             correctAnswer.IsCorrectAnswer = true;
             ////Testing for correct answer being chosen

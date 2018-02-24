@@ -6,10 +6,10 @@ namespace QuizTime3
 {
     class Game
     {
-        public bool IsRunning { get; set; }
-        public List<Option> Options { get; set; }
+        internal bool IsRunning { get; set; }
+        internal List<Option> Options { get; set; }
 
-        public Game()
+        internal Game()
         {
             IsRunning = true;
             Options = new List<Option>
