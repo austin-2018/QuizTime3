@@ -67,25 +67,25 @@ namespace QuizTime3
             return input;
         }
 
-        public static string GetChoice(List<string> questionType)
+        public static string GetAnswerKey(List<string> questionType)
         {
             string answer;
 
             do
             {
-                Console.Write("Choice: ");
+                Console.Write("Answer Key: ");
                 answer = Console.ReadLine();
             } while (!IsValidSelection(answer, questionType));
             return answer;
         }
 
-        public static string GetChoice(List<Answer> answers)
+        public static string GetAnswerKey(List<Answer> answers)
         {
             string answer;
 
             do
             {
-                Console.Write("Choice: ");
+                Console.Write("Answer Key: ");
                 answer = Console.ReadLine();
             } while (!IsValidSelection(answer, answers));
             return answer;

@@ -12,17 +12,20 @@ namespace QuizTime3
         private static List<string> QuestionTypesStringVersion = new List<string>
         {
             "Multiple Choice",
-            "True and False",
-            "Check Box - Multiple Choice"
+            "True and False"
+          //  "Check Box - Multiple Choice (under construction)"
         };
-        private static List<Answer> Answers { get; set; }
+        private List<Answer> UserChoices { get; set; }
+
+        private static double Correct { get; set; }
 
         public Quiz()
         {
             Console.Write("Enter name for this Quiz: ");
             Name = Console.ReadLine();
             Questions = new List<Question>();
-            Answers = new List<Answer>();
+            UserChoices = new List<Answer>();
+            Correct = 0.00;
         }
 
         public void Play()
@@ -48,17 +51,35 @@ namespace QuizTime3
             foreach (Question question in Questions)
             {
                 Utility.PrintQuestionOut(question.Name, question.Answers);
-                int choice = int.Parse(Utility.GetChoice(question.Answers));
-                Answers.Add(question.Answers.Single(answer => answer.ID.Equals(choice)));
-            }
+                string choice = Utility.GetChoice();
+                UserChoices.Add(question.Answers.Find(answer => answer.ID.Equals(int.Parse(choice))));
+                //UNDER CONSTRUCTION 
+                //IList<char> choices = ChooseAnswer(question;
+                //var query = choices.SelectMany(
+                //    choice => question.Answers.Where(
+                //        answer => answer.ID.Equals(int.Parse(choice.ToString()))));
+            }   
+        }
+
+        public List<char> ChooseAnswer(Question question)
+        {
+            List<char> choices;
+            Console.Write("Enter your choice or choice(s) [if more than one just group it i.e. 123]: ");
+            do
+            {
+                string input = Console.ReadLine();
+                choices = input.ToList();
+            } while (choices.Contains(',') || choices.Contains(' ') || !(choices.TrueForAll(key => char.IsDigit(key) ? !(int.Parse(key.ToString()) < 1 || int.Parse(key.ToString()) > question.Answers.Count) : false )));
+
+            return choices;
         }
 
         public string GradeQuiz()
         {
             Console.Clear();
-            List<Answer> correct = Answers.FindAll(answer => answer.IsCorrectAnswer);
-            double result = (double) correct.Count / (double) Answers.Count;
-            return string.Format("{0} out of {1} correct: {2:P}", correct.Count, Answers.Count, result);
+            IList<Answer> correct = UserChoices.FindAll(answer => answer.IsCorrectAnswer);
+            double result = (double) correct.Count / (double) UserChoices.Count;
+            return string.Format("{0} out of {1} correct: {2:P}", correct.Count, UserChoices.Count, result);
         }
 
         public int DetermineQuestionAmount()
@@ -70,14 +91,15 @@ namespace QuizTime3
 
 
 
-        public Question DetermineQuestionType()
+        public static Question DetermineQuestionType()
         {
-           return MakeQuestionType(Utility.GetChoice(QuestionTypesStringVersion));
+           return MakeQuestionType(Utility.GetAnswerKey(QuestionTypesStringVersion));
         }
 
         public static Question MakeQuestionType(string key)
         {
-            return key.Equals("1") ? new MultipleChoice(4) as Question: key.Equals("2") ? new TrueFalse() as Question: new CheckBox(5) as Question;
+         //   return key.Equals("1") ? new MultipleChoice(4) as Question : key.Equals("2") ? new TrueFalse() as Question;: new CheckBox(5) as Question;
+            return key.Equals("1") ? new MultipleChoice(4) as Question : new TrueFalse() as Question; //: new CheckBox(5) as Question;
         }
     }
 }

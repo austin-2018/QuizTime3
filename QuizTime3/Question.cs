@@ -34,7 +34,7 @@ namespace QuizTime3
             return Console.ReadLine();
         }
 
-        protected void MakePossibleAnswers(int numberOfPossibleAnswers)
+        protected virtual void MakePossibleAnswers(int numberOfPossibleAnswers)
         {
             Console.Clear();
             Console.WriteLine("Enter {0} possible answers", numberOfPossibleAnswers);
@@ -43,14 +43,12 @@ namespace QuizTime3
                 Console.Write("{0}: ", i + 1);
                 Answers.Add(new Answer(i + 1, Console.ReadLine()));
             }
-            SetCorrectAnswer();
         }
 
         protected virtual void SetCorrectAnswer()
         {
-            Console.Clear();
             Utility.PrintQuestionOut("Choose which of the following answers are correct: ", Answers);
-            int answer = int.Parse(Utility.GetChoice(Answers));
+            int answer = int.Parse(Utility.GetAnswerKey(Answers));
             Answer correctAnswer = (Answers.Find(individualAnswer => individualAnswer.ID.Equals(answer)));
             correctAnswer.IsCorrectAnswer = true;
             ////Testing for correct answer being chosen
