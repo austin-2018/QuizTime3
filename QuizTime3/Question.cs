@@ -30,13 +30,13 @@ namespace QuizTime3
         protected string MakeQuestionName()
         {
             Console.Clear();
-            return GameLogic.GetAnswer("Please enter the question: ");
+            return GameHelpers.GetAnswer("Please enter the question: ");
         }
 
         protected virtual void MakePossibleAnswers(int numberOfPossibleAnswers)
         {
             Console.Clear();
-            GameLogic.PrintSlow(string.Format("Enter {0} possible answers\n", numberOfPossibleAnswers));
+            GameHelpers.PrintSlow(string.Format("Enter {0} possible answers\n", numberOfPossibleAnswers));
             for (int i = 0; i < numberOfPossibleAnswers; i++)
             {
                 Console.Write("{0}: ", i + 1);
@@ -47,7 +47,7 @@ namespace QuizTime3
         protected virtual void SetCorrectAnswer()
         {
             
-            int answer = int.Parse(GameLogic.GetAnswer(string.Format("Question: {0}\n\nChoose which of the following answers are correct: ", Name), Answers));
+            int answer = int.Parse(GameHelpers.GetAnswer(string.Format("Question: {0}\n\nChoose which of the following answers are correct: ", Name), Answers));
             Answer correctAnswer = (Answers.Find(individualAnswer => individualAnswer.ID.Equals(answer)));
             correctAnswer.IsCorrectAnswer = true;
             ////Testing for correct answer being chosen

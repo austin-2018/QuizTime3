@@ -102,7 +102,7 @@ namespace QuizTime3
             {
                 Console.Write(" ");
             }
-            GameLogic.PrintSlow(prompt);
+            GameHelpers.PrintSlow(prompt);
             Console.ReadLine();
             Thread.Sleep(250);
 
@@ -196,8 +196,8 @@ namespace QuizTime3
         {
             DisplayAlternatingSymbols('*');
             TransitionEffectHalfConsole();
-            GameLogic.PrintSlow(". . . . . . . . ", 150);
-            GameLogic.PrintSlow("Good bye!");
+            GameHelpers.PrintSlow(". . . . . . . . ", 150);
+            GameHelpers.PrintSlow("Good bye!");
             Thread.Sleep(1000);
         }
     }

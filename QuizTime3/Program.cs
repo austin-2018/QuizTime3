@@ -22,7 +22,7 @@ namespace QuizTime3
 
         private static void PlayAgain(Game game)
         {
-            string choice = GameLogic.GetAnswer("Do you want to play again ?", game);
+            string choice = GameHelpers.GetAnswer("Do you want to play again ?", game);
             Option pickedOption = game.Options.Find(option => option.ID.Equals(int.Parse(choice)));
             game.IsRunning = pickedOption.Name.Equals("Yes");
             Console.Clear();

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace QuizTime3
 {
-    class GameLogic
+    class GameHelpers
     {
         public static bool IsNumber(string input)
         {
@@ -175,7 +175,7 @@ namespace QuizTime3
 
             do
             {
-                GameLogic.PrintQuestionOut(prompt, answers);
+                GameHelpers.PrintQuestionOut(prompt, answers);
                 Console.Write("\nAnswer Key: ");
                 answer = Console.ReadLine();
 
@@ -196,7 +196,7 @@ namespace QuizTime3
 
             do
             {
-                GameLogic.PrintQuestionOut(prompt, game.Options);
+                GameHelpers.PrintQuestionOut(prompt, game.Options);
                 Console.Write("\nChoice: ");
                 answer = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(answer))
